@@ -5,12 +5,12 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import util.Common;
+import Util.Common;
 
 import java.awt.*;
 
 /**
- * 小球继承Runnable用于多线程运行
+ * 小球
  */
 public class Ball extends Item {
     float radius; // 半径

@@ -3,12 +3,15 @@ package Item;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import util.Common;
+import Util.Common;
 
 import java.awt.*;
 
+/**
+ * 直轨
+ */
 public class Rail extends Item{
-    float hw,hh; // 半高 半宽
+    float hw,hh;
     /**
      * 直道的实现：通过两个细长的矩形模拟管道。因此分别创建两个刚体rail1 & rail2
      */
@@ -23,7 +26,7 @@ public class Rail extends Item{
 
     @Override
     public void initInWorld() {
-        BodyDef bd1 = new BodyDef();  // 定义刚体
+        BodyDef bd1 = new BodyDef();
         BodyDef bd2 = new BodyDef();
         //将管道看作两条平行的细长矩形
         hw = (float) 1/100;

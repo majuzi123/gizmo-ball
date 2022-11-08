@@ -1,4 +1,4 @@
-package util;
+package Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,8 +45,6 @@ public class IconUtil extends Properties {
 
     /**
      * 通过iconName获取对应的ImageIcon
-     * @param iconName
-     * @return 相应的ImageIcon
      */
     public ImageIcon getImageIcon(String iconName){
             ImageIcon icon = new ImageIcon(getProperty(iconName));

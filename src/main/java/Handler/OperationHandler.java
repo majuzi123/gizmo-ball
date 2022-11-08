@@ -1,21 +1,21 @@
 package Handler;
 
 import Item.Item;
-import View.GameFrame;
+import Controller.GizmoBall;
 import View.GamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OperationHandler implements ActionListener {
-    private GameFrame gameFrame;
+    private GizmoBall gizmoBall;
 
-    public OperationHandler(GameFrame gameFrame){
-        this.gameFrame=gameFrame;
+    public OperationHandler(GizmoBall gizmoBall){
+        this.gizmoBall = gizmoBall;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        GamePanel gamePanel = gameFrame.getGamePane();
+        GamePanel gamePanel = gizmoBall.getGamePane();
         Item item = gamePanel.getCurItem();
         if(item!=null){ // 获取在Board中选中的item进行修改
             switch (e.getActionCommand()){

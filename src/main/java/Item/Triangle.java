@@ -6,14 +6,16 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import util.Common;
-
+import Util.Common;
 import java.awt.*;
 
+/**
+ * 三角形挡板
+ */
 public class Triangle extends Item {
-    float worldX, worldY; // 坐标/2
-    int count = 3; // vertex number
-    int h = Item.BASE_HEIGHT ; // h表示三角形边长
+    float worldX, worldY;
+    int count = 3;
+    int h = Item.BASE_HEIGHT;
 
     public Triangle(Integer x, Integer y, String image){
         super(x,y,image);

@@ -1,6 +1,6 @@
 package Handler;
 
-import View.GameFrame;
+import Controller.GizmoBall;
 import View.GamePanel;
 
 import javax.swing.*;
@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class FileHandler implements ActionListener {
-    private GameFrame gameFrame;
+    private GizmoBall gizmoBall;
 
-    public FileHandler(GameFrame gameFrame){
-        this.gameFrame=gameFrame;
+    public FileHandler(GizmoBall gizmoBall){
+        this.gizmoBall = gizmoBall;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class FileHandler implements ActionListener {
         }
     }
     public  void newGame() {
-        GamePanel gamePanel = gameFrame.getGamePane();
+        GamePanel gamePanel = gizmoBall.getGamePane();
         // 删除之前的所有组件
         for (Component c: gamePanel.getComponents())
             gamePanel.remove(c);
@@ -53,7 +53,7 @@ public class FileHandler implements ActionListener {
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
-            gameFrame.saveGamePane(file);
+            gizmoBall.saveGamePane(file);
             System.out.println("保存文件成功");
         }
     }
@@ -62,10 +62,10 @@ public class FileHandler implements ActionListener {
         JFileChooser chooser = new JFileChooser(); // 设置选择器
         chooser.setCurrentDirectory(new File(".")); // 打开当前文件所在目录·
         chooser.setMultiSelectionEnabled(false); // 设为单选
-        int returnVal = chooser.showOpenDialog(gameFrame); // 判断是否打开文件选择框
+        int returnVal = chooser.showOpenDialog(gizmoBall); // 判断是否打开文件选择框
         if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
             File file = chooser.getSelectedFile();
-            gameFrame.loadGamePane(file);
+            gizmoBall.loadGamePane(file);
             System.out.println("加载文件成功");
         }
         else{

@@ -1,20 +1,20 @@
 package Handler;
 
-import View.GameFrame;
+import Controller.GizmoBall;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ItemHandler implements ActionListener {
-    private GameFrame gameFrame;
+    private GizmoBall gizmoBall;
 
-    public ItemHandler(GameFrame gameFrame){
-        this.gameFrame=gameFrame;
+    public ItemHandler(GizmoBall gizmoBall){
+        this.gizmoBall = gizmoBall;
     }
     public void actionPerformed(ActionEvent e) {
         String itemName = e.getActionCommand();
         try {
-            gameFrame.setNextItemName(itemName); // 在GamePane中设置想要新建的Item的类别
+            gizmoBall.setNextItemName(itemName); // 在GamePane中设置想要新建的Item的类别
         } catch (Exception exception) {
             exception.printStackTrace();
         }

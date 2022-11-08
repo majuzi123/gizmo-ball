@@ -13,8 +13,8 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
 import Item.*;
-import util.Common;
-import util.IconUtil;
+import Util.Common;
+import Util.IconUtil;
 
 /**
  * GamePane类，用于摆放组件和进行游戏

@@ -1,6 +1,6 @@
 package Handler;
 
-import View.GameFrame;
+import Controller.GizmoBall;
 import View.GamePanel;
 import View.ModePanel;
 
@@ -8,14 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ModeHandler implements ActionListener {
-    private GameFrame gameFrame;
+    private GizmoBall gizmoBall;
 
-    public ModeHandler(GameFrame gameFrame){
-        this.gameFrame=gameFrame;
+    public ModeHandler(GizmoBall gizmoBall){
+        this.gizmoBall = gizmoBall;
     }
 
     public void actionPerformed(ActionEvent e) {
-        GamePanel gamePanel = gameFrame.getGamePane();
+        GamePanel gamePanel = gizmoBall.getGamePane();
         if(e.getActionCommand()=="Build") {
             // 停止GamePane线程
             ModePanel.button2.setEnabled(true);

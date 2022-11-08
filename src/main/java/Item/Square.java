@@ -5,10 +5,13 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import util.Common;
+import Util.Common;
 
 import java.awt.*;
 
+/**
+ * 正方形障碍
+ */
 public class Square extends Item{
     float hw ;
     float hh ; // 半宽 & 高
@@ -45,18 +48,17 @@ public class Square extends Item{
     }
 
     @Override
-    public void enlarge(){
+    public void enlarge(){ // 放大Item
         scale += 1;
         width = Item.BASE_WIDTH * scale;
         height = Item.BASE_HEIGHT * scale;
-        //放大缩小时，半高半宽也随之更新
         hw = (float) width /2;
         hh = (float) height /2;
         setSize(width, height);
     }
 
     @Override
-    public void reduce(){
+    public void reduce(){ // 缩小Item
         if (scale > 1){
             scale -= 1;
             width = Item.BASE_WIDTH * scale;

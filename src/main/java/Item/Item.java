@@ -1,7 +1,7 @@
 package Item;
 
 import org.jbox2d.dynamics.Body;
-import util.Common;
+import Util.Common;
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Item extends JComponent{
     // Item类族内部用到的一些常量
-    public static final double BASE_LENGTH = 25;  // 一个格子的大小
+    public static final double BASE_LENGTH = 25;
     public static final double BASE_RADIUS = BASE_LENGTH/2;
     public static final int BASE_WIDTH = 25;
     public static final int BASE_HEIGHT = 25;
@@ -27,7 +27,6 @@ public class Item extends JComponent{
     transient Body body;
 
     public Item(Integer x, Integer y, String imageUrl){
-
         //通过setX() & setY() 将鼠标点击位置转换为左上角坐标，使对应的图形画在格子内部（正中间）
         setX(x);
         setY(y);

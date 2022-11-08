@@ -5,10 +5,13 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import util.Common;
+import Util.Common;
 
 import java.awt.*;
 
+/**
+ * 弯轨
+ */
 public class Curve extends Item {
     //通过三角形模拟小球在弯道中的运动情况，内部逻辑与三角形相似
     float worldX, worldY;
@@ -25,7 +28,7 @@ public class Curve extends Item {
 
     @Override
     public void initInWorld() {
-        BodyDef bd = new BodyDef();  // 定义刚体
+        BodyDef bd = new BodyDef();
         bd.type = BodyType.STATIC;
         // 设置刚体内部属性
         FixtureDef fd = new FixtureDef();

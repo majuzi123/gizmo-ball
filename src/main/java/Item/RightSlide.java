@@ -5,10 +5,13 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import util.Common;
+import Util.Common;
 
 import java.awt.*;
 
+/**
+ * 右板
+ */
 public class RightSlide extends Item{
     float hw ; //半宽
     float hh ; //半高

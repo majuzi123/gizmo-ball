@@ -1,10 +1,12 @@
-package View;
+package Controller;
+
 import Handler.FileHandler;
 import Handler.ItemHandler;
 import Handler.ModeHandler;
 import Handler.OperationHandler;
 import Item.Item;
-import util.IconUtil;
+import View.*;
+import Util.IconUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +17,18 @@ import java.io.*;
 /**
  * 顶层Frame类，包含所有的Panel
  */
-public class GameFrame extends JFrame {
+public class GizmoBall extends JFrame {
     IconUtil kv = new IconUtil();
     private GamePanel gamePanel;
+    private FileHandler fileHandler;
+    private FilePanel filePanel;
+    private JPanel rightPanel;
+    private ItemHandler itemHandler;
+    private ItemPanel itemPanel;
+    private OperationHandler operationHandler;
+    private OperationPanel operationPanel;
+    private ModeHandler modeHandler;
+    private ModePanel modePanel;
 
     // 静态代码块，初始化加载图片
     {
@@ -28,7 +39,7 @@ public class GameFrame extends JFrame {
         }
     }
 
-    public GameFrame(){
+    public GizmoBall(){
         // 初始化GameFrame顶层窗口
         setTitle("Lab03-弹球游戏");
         setLayout(new FlowLayout());
@@ -41,33 +52,33 @@ public class GameFrame extends JFrame {
         setSize(750, 500);
 
         // 初始化菜单
-        FileHandler fileHandler = new FileHandler(this);
-        FilePanel filePanel = new FilePanel(fileHandler);
+        fileHandler = new FileHandler(this);
+        filePanel = new FilePanel(fileHandler);
         setJMenuBar(filePanel);
 
         // 初始化游戏面板
         setGamePane(new GamePanel());
 
         // 初始化右侧工具面板
-        JPanel rightPane = new JPanel();
-        rightPane.setPreferredSize(new Dimension(160, 500));
-        rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.Y_AXIS));
+        rightPanel = new JPanel();
+        rightPanel.setPreferredSize(new Dimension(160, 500));
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
-        ItemHandler itemHandler = new ItemHandler(this); // 组件栏
-        ItemPanel itemPanel = new ItemPanel(itemHandler);
+        itemHandler = new ItemHandler(this); // 组件栏
+        itemPanel = new ItemPanel(itemHandler);
 
-        OperationHandler operationHandler = new OperationHandler(this); // 操作栏
-        OperationPanel operationPanel = new OperationPanel(operationHandler);
+        operationHandler = new OperationHandler(this); // 操作栏
+        operationPanel = new OperationPanel(operationHandler);
 
-        ModeHandler modeHandler = new ModeHandler(this); // 模式栏
-        ModePanel modePanel = new ModePanel(modeHandler);
+        modeHandler = new ModeHandler(this); // 模式栏
+        modePanel = new ModePanel(modeHandler);
 
-        rightPane.add(itemPanel);
-        rightPane.add(operationPanel);
-        rightPane.add(modePanel);
+        rightPanel.add(itemPanel);
+        rightPanel.add(operationPanel);
+        rightPanel.add(modePanel);
 
         setBackground(new Color(247, 247, 243, 255));
-        add(rightPane);
+        add(rightPanel);
         pack();
         setVisible(true);
     }

@@ -43,7 +43,7 @@ public class ModePanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            GameFrame gameFrame = (GameFrame) getRootPane().getParent();
+            Controller.GizmoBall gameFrame = (Controller.GizmoBall) getRootPane().getParent();
             GamePane gamePane = gameFrame.getGamePane();
             // 布局模式
             if(e.getSource()==button1) {
