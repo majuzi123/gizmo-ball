@@ -19,10 +19,9 @@ import Util.IconUtil;
 /**
  * GamePane类，用于摆放组件和进行游戏
  */
-public class GamePanel extends JPanel implements Runnable,Serializable{
+public class BoardPanel extends JPanel implements Runnable,Serializable{
 
-    IconUtil kv = new IconUtil();
-    // 左右挡板
+    IconUtil kv = new IconUtil(); // 工具类，用于加载图像
     private LeftSlide lSlide;
     private RightSlide rSlide;
     private volatile Boolean stop = false;// 标志位，控制线程执行
@@ -38,16 +37,18 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
         }
     }
 
-    public GamePanel(){
+    public BoardPanel(){
         addMouseListener(myMouseListener);
         addKeyListener(new MyKeyListener());
         setPreferredSize(new Dimension(500, 500));
         setVisible(true);
         new Common(this);
-        // 标示边界
         Common.updateBounds(500,500);
     }
 
+    /**
+     * 添加Item并显示
+     */
     public void add(Item item){
         setCurItem(item);
         super.add(item);
@@ -89,13 +90,15 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
         this.itemType = itemType;
     }
 
+    /**
+     * 绘制格子和Component
+     */
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
-        // 绘制格子
         g2.setColor(new Color(235, 241, 241, 255));
         g2.fill3DRect(0, 0, 500, 500, true);
-        g2.setColor(new Color(0, 0, 0, 255));
+        g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(1));
         for(int i = 1;i < 20;i ++) {
             g2.drawLine(0,25*i,500,25*i );
@@ -103,7 +106,6 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
         for(int i = 1;i < 20;i ++) {
             g2.drawLine(25*i,0,25*i,500);
         }
-        // 绘制每一个Component
         for(Component i: getComponents()){
             i.paint(g);
         }
@@ -161,7 +163,7 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
     }
 
     /**
-     * 鼠标监听，在GamePane中添加Component
+     * 鼠标监听，在BoardPanel中添加Component
      */
     @SuppressWarnings("unchecked")
     private class MyMouseListener implements MouseListener, Serializable {
@@ -170,7 +172,7 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
         public void mouseClicked(MouseEvent e) {
             // 可以获取
             if(MouseEvent.BUTTON1 == e.getButton()){
-                GamePanel panel = (GamePanel) e.getSource();
+                BoardPanel panel = (BoardPanel) e.getSource();
                 // 当类型不为箭头时，根据item类型创建并加入
                 String itemType = panel.getItemType();
                 int x = e.getX();
@@ -239,38 +241,60 @@ public class GamePanel extends JPanel implements Runnable,Serializable{
         }
         @Override
         public void keyPressed(KeyEvent e) {
-            GamePanel panel = (GamePanel)e.getSource();
+            BoardPanel panel = (BoardPanel)e.getSource();
             LeftSlide leftSlide = null;
             RightSlide rightSlide = null;
-            // 获取左右挡板（如果有的话）
             if(panel.getLSlide()!=null)
               leftSlide = panel.getLSlide();
             if(panel.getRSlide()!=null)
                 rightSlide = panel.getRSlide();
-            // 根据键盘输入修改对应Slide的位置
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_LEFT:
+            switch (e.getKeyCode()){ // 根据键盘输入修改对应Slide的位置
+                case KeyEvent.VK_LEFT: // 控制右板
                     if(rightSlide!=null){
                         rightSlide.setX(rightSlide.getX()-25);
-                        rightSlide.move(-25);
+                        rightSlide.move(-25,0);
                     }
                     break;
                 case KeyEvent.VK_RIGHT:
                     if(rightSlide!=null){
                         rightSlide.setX(rightSlide.getX()+25);
-                        rightSlide.move(25);
+                        rightSlide.move(25,0);
                     }
                     break;
-                case KeyEvent.VK_A:
+                case KeyEvent.VK_UP:
+                    if(rightSlide!=null){
+                        rightSlide.setY(rightSlide.getY()-25);
+                        rightSlide.move(0,-25);
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(rightSlide!=null){
+                        rightSlide.setY(rightSlide.getY()+25);
+                        rightSlide.move(0,+25);
+                    }
+                    break;
+                case KeyEvent.VK_A:// 控制左板
                     if(leftSlide!=null){
                         leftSlide.setX(leftSlide.getX()-25);
-                        leftSlide.move(-25);
+                        leftSlide.move(-25,0);
                     }
                     break;
                 case KeyEvent.VK_D:
                     if(leftSlide!=null){
                         leftSlide.setX(leftSlide.getX()+25);
-                        leftSlide.move(25);
+                        leftSlide.move(25,0);
+                    }
+                    break;
+                case KeyEvent.VK_W:
+                    if(leftSlide!=null){
+                        leftSlide.setY(leftSlide.getY()-25);
+                        leftSlide.move(0,-25);
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                    if(leftSlide!=null){
+                        leftSlide.setX(leftSlide.getX()+25);
+                        leftSlide.move(0,+25);
                     }
                     break;
             }

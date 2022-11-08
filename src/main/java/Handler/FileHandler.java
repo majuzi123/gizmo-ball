@@ -1,7 +1,7 @@
 package Handler;
 
 import Controller.GizmoBall;
-import View.GamePanel;
+import View.BoardPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,12 +32,13 @@ public class FileHandler implements ActionListener {
         }
     }
     public  void newGame() {
-        GamePanel gamePanel = gizmoBall.getGamePane();
+        BoardPanel boardPanel = gizmoBall.getGamePanel();
+        boardPanel.stop();
         // 删除之前的所有组件
-        for (Component c: gamePanel.getComponents())
-            gamePanel.remove(c);
+        for (Component c: boardPanel.getComponents())
+            boardPanel.remove(c);
         // 需要手动立即更新UI，否则删除的组件仍会显示
-        gamePanel.updateUI();
+        boardPanel.updateUI();
     }
 
     public  void saveGame(){
@@ -53,7 +54,7 @@ public class FileHandler implements ActionListener {
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
-            gizmoBall.saveGamePane(file);
+            gizmoBall.saveGamePanel(file);
             System.out.println("保存文件成功");
         }
     }

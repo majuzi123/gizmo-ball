@@ -10,7 +10,7 @@ import Util.Common;
 import java.awt.*;
 
 /**
- * 右板
+ * 右侧挡板
  */
 public class RightSlide extends Item{
     float hw ; //半宽
@@ -50,8 +50,8 @@ public class RightSlide extends Item{
     /**
      * 移动挡板（刚体）的方法
      */
-    public void move(int length){
-        body.setTransform(new Vec2(body.getPosition().x + length ,
-                body.getPosition().y),0);
+    public void move(int lengthX,int lengthY){
+        body.setTransform(new Vec2(body.getPosition().x + lengthX ,
+                body.getPosition().y + lengthY),0);
     }
 }

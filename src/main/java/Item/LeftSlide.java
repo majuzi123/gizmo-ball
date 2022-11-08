@@ -49,9 +49,9 @@ public class LeftSlide extends Item{
     /**
      * 移动挡板（刚体）的方法
      */
-    public void move(int length){
+    public void move(int lengthX,int lengthY){
         //设置刚体位置和姿态角，position表示要设置的位置坐标，angle表示要设置的姿态角弧度
-        body.setTransform(new Vec2(body.getPosition().x + length ,
-                body.getPosition().y),0);
+        body.setTransform(new Vec2(body.getPosition().x + lengthX ,
+                body.getPosition().y + lengthY),0);
     }
 }

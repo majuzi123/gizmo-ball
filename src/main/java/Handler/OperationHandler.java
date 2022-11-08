@@ -2,7 +2,7 @@ package Handler;
 
 import Item.Item;
 import Controller.GizmoBall;
-import View.GamePanel;
+import View.BoardPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +15,8 @@ public class OperationHandler implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        GamePanel gamePanel = gizmoBall.getGamePane();
-        Item item = gamePanel.getCurItem();
+        BoardPanel boardPanel = gizmoBall.getGamePanel();
+        Item item = boardPanel.getCurItem();
         if(item!=null){ // 获取在Board中选中的item进行修改
             switch (e.getActionCommand()){
                 case "rotate":
@@ -24,7 +24,7 @@ public class OperationHandler implements ActionListener {
                     System.out.println("旋转item");
                     break;
                 case "delete":
-                    gamePanel.remove(item);
+                    boardPanel.remove(item);
                     System.out.println("移除item");
                     break;
                 case "plus":
@@ -36,7 +36,7 @@ public class OperationHandler implements ActionListener {
                     System.out.println("缩减item");
                     break;
             }
-            gamePanel.repaint();
+            boardPanel.repaint();
         }
     }
 }

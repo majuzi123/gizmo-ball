@@ -5,12 +5,9 @@ import java.awt.*;
 import java.util.*;
 
 /**
- * 用来获取对应的图标，使得图标在ItemPane上有序显示。
+ * 工具类，用来获取Item对应的图标
  */
 public class IconUtil extends Properties {
-        /**
-         * 因为LinkedHashSet有序，所以，key在调用put()的时候，存放到这里也就有序。
-         */
         private final LinkedHashSet<Object> keys = new LinkedHashSet<>();
 
         @Override
