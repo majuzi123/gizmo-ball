@@ -1,7 +1,8 @@
 package View;
 
 import Item.Item;
-
+import Util.IconUtil;
+import Util.VirtualWorld;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,13 +12,10 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
-
 import Item.*;
-import Util.Common;
-import Util.IconUtil;
 
 /**
- * GamePane类，用于摆放组件和进行游戏
+ * BoardPanel类，用于摆放组件和进行游戏
  */
 public class BoardPanel extends JPanel implements Runnable,Serializable{
 
@@ -30,7 +28,7 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
     private transient Item curItem;// 指向当前选择的组件
 
     {
-        try { // 添加Item时使用
+        try { // 加载图像
             kv.load(this.getClass().getClassLoader().getResourceAsStream("properties/item.properties"));
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -42,8 +40,8 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
         addKeyListener(new MyKeyListener());
         setPreferredSize(new Dimension(500, 500));
         setVisible(true);
-        new Common(this);
-        Common.updateBounds(500,500);
+        new VirtualWorld(this);
+        VirtualWorld.updateBounds(500,500);
     }
 
     /**
@@ -144,7 +142,7 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
     }
 
     private void logic() {
-        Common.step();
+        VirtualWorld.step();
     }
 
     public void initAllBody() {
@@ -305,3 +303,4 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
         }
     }
 }
+

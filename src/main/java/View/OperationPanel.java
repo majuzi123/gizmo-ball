@@ -11,7 +11,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 /**
- * OperationPanel类，对GamePanel中item进行旋转、删除、放大和缩小操作
+ * OperationPanel类，展示旋转、删除、放大和缩小操作
  */
 public class OperationPanel extends JPanel {
     private final OperationHandler operationHandler;
@@ -24,7 +24,7 @@ public class OperationPanel extends JPanel {
         setLayout(new GridLayout(2, 4));
         try {
             Properties kv = new IconUtil();
-            kv.load(this.getClass().getClassLoader().getResourceAsStream("properties/tool.properties"));
+            kv.load(this.getClass().getClassLoader().getResourceAsStream("properties/operation.properties"));
             Enumeration keys = kv.keys();
             ButtonGroup group=new ButtonGroup();
             while (keys.hasMoreElements()) {

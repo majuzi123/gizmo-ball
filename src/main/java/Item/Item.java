@@ -1,16 +1,15 @@
 package Item;
 
+
 import org.jbox2d.dynamics.Body;
-import Util.Common;
+import Util.VirtualWorld;
 import javax.swing.*;
 import java.awt.*;
-
 
 /**
  * 继承JComponent用于画图，并且JComponent已经实现了Serializable，可以直接用于序列化保存
  */
 public class Item extends JComponent{
-    // Item类族内部用到的一些常量
     public static final double BASE_LENGTH = 25;
     public static final double BASE_RADIUS = BASE_LENGTH/2;
     public static final int BASE_WIDTH = 25;
@@ -27,8 +26,7 @@ public class Item extends JComponent{
     transient Body body;
 
     public Item(Integer x, Integer y, String imageUrl){
-        //通过setX() & setY() 将鼠标点击位置转换为左上角坐标，使对应的图形画在格子内部（正中间）
-        setX(x);
+        setX(x); //将鼠标点击位置转换为左上角坐标，使对应的图形画在格子内部（正中间）
         setY(y);
         setImageUrl(imageUrl);
         setBounds(this.x, this.y, 25, 25);
@@ -70,7 +68,7 @@ public class Item extends JComponent{
      * 在world里删除对应的刚体
      */
     public void destroyInWorld(){
-        Common.world.destroyBody(body);
+        VirtualWorld.world.destroyBody(body);
         body = null;
     }
 

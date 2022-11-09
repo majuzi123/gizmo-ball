@@ -1,6 +1,5 @@
 package Util;
 
-import Item.BlackHole;
 import Item.Item;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -12,18 +11,19 @@ import org.jbox2d.dynamics.contacts.Contact;
 import View.BoardPanel;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
- * 物理引擎控制类
+ * 存在于BoardPanel中的模拟世界
  */
-public class Common {
+public class VirtualWorld implements Serializable {
     private BoardPanel boardPanel;
-    public static World world = new World(new Vec2(0f,10f)); // 设置重力，模拟“世界”
+    public static World world = new World(new Vec2(0f,10f)); // 这是JBox2d当中抽象出来的存在引力、坐标范围的一个模拟的世界
     public static final int WIDTH = 500;
     public static final int HIGHT = 500;
     public static final float TIME_STEP = 1f/30f;
 
-    public Common(BoardPanel boardPanel) {
+    public VirtualWorld(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
 
         world.setContactListener(new ContactListener() { // 设置碰撞监听，用于黑洞吸收
@@ -31,18 +31,17 @@ public class Common {
             public void beginContact(Contact contact) {
                 Fixture fixtureA = contact.getFixtureA();
                 Fixture fixtureB = contact.getFixtureB();
-                Vec2 position1 = fixtureA.getBody().getPosition();
-                Vec2 position2 = fixtureB.getBody().getPosition();
-                Component component1 = boardPanel.getComponentAt((int)position1.x, (int)position1.y);
-                Component component2 = boardPanel.getComponentAt((int)position2.x, (int)position2.y);
-                // 判断碰撞双方中是否有黑洞（碰撞另一方必为小球）
-                if(component1 instanceof BlackHole || component2 instanceof BlackHole){
-                    Fixture ballFixture = fixtureA.getBody().getType()==BodyType.DYNAMIC?fixtureA:fixtureB;
-                    // 遍历BoardPanel的组件，通过判断组件的物体实体（Body）和发生碰撞的小球物理实体是否相同，找到小球组件将其删除
+                Body body1 = fixtureA.getBody();
+                Body body2 = fixtureB.getBody();
+                if(body2.getUserData() == ItemType.Ball) {
+                    Body b = body1;
+                    body1 = body2;
+                    body2 = b;
+                }
+                if (body1.getUserData() == ItemType.Ball && body2.getUserData() == ItemType.BlackHole) {
                     for(Component component: boardPanel.getComponents()){
                         Item item = (Item) component;
-                        if(item.getBody().hashCode()==ballFixture.getBody().hashCode()){
-                            ballFixture.setSensor(true);
+                        if(item.getBody().hashCode()==body1.hashCode()){
                             item.destroyInWorld(); // 移除与黑洞碰撞的小球
                             boardPanel.remove(component);
                             System.out.println("被黑洞吸收！");
@@ -76,7 +75,7 @@ public class Common {
      * 物理世界向前推进
      */
     public static void step(){
-        world.step(TIME_STEP,6,6);
+        world.step(TIME_STEP,6,2);
     }
 
     /**

@@ -44,7 +44,7 @@ public class ModePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             Controller.GizmoBall gameFrame = (Controller.GizmoBall) getRootPane().getParent();
-            GamePane gamePane = gameFrame.getGamePanel();
+            GamePane gamePane = gameFrame.getBoardPanel();
             // 布局模式
             if(e.getSource()==button1) {
                 // 停止GamePane线程

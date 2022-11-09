@@ -1,11 +1,12 @@
 package Item;
 
+import Util.VirtualWorld;
+import Util.ItemType;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
 
 import java.awt.*;
 
@@ -23,20 +24,19 @@ public class Ball extends Item {
     }
 
     @Override
-    public void initInWorld(){
+    public void initInWorld(){ // 创建刚体
         BodyDef bd = new BodyDef();
-        //球形刚体位置：质心/圆心
         bd.position = new Vec2(x+radius,y+radius);
-        bd.type = BodyType.DYNAMIC;// 可运动的
-        // 设置刚体的物理描述，包括类型、形状和大小
+        bd.type = BodyType.DYNAMIC; // 可运动的
+        bd.userData = ItemType.Ball;
         FixtureDef fd = new FixtureDef();
         CircleShape cs = new CircleShape();
         cs.m_radius = radius;
         fd.shape = cs; // 与形状绑定
         fd.restitution = 1f; // 完全弹性碰撞
         fd.friction = 0.5f; // 摩擦系数
-        //创建刚体
-        body = Common.world.createBody(bd);
+
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
     }
 

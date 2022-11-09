@@ -15,7 +15,7 @@ public class OperationHandler implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        BoardPanel boardPanel = gizmoBall.getGamePanel();
+        BoardPanel boardPanel = gizmoBall.getBoardPanel();
         Item item = boardPanel.getCurItem();
         if(item!=null){ // 获取在Board中选中的item进行修改
             switch (e.getActionCommand()){

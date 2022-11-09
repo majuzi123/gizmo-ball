@@ -1,12 +1,12 @@
 package Item;
 
+import Util.ItemType;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
-
+import Util.VirtualWorld;
 import java.awt.*;
 
 /**
@@ -25,16 +25,17 @@ public class Square extends Item{
     }
 
     @Override
-    public void initInWorld() {
+    public void initInWorld() { // 创建刚体
         BodyDef bd = new BodyDef();
         bd.position = new Vec2(x+hw,y+hh);
         bd.type = BodyType.STATIC; // 不可运动的
+        bd.userData = ItemType.Square;
         FixtureDef fd = new FixtureDef();
         PolygonShape ps = new PolygonShape();
-        // 将形状设置为矩形，hw表示矩形半宽，hh表示矩形的半高
-        ps.setAsBox(hw,hh);
+        ps.setAsBox(hw,hh); // 将形状设置为矩形，hw=hh
         fd.shape = ps;
-        body = Common.world.createBody(bd);
+
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
     }
 
@@ -42,8 +43,7 @@ public class Square extends Item{
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g.create();
-        //正方形图片的旋转：以正方形中心为旋转中心
-        g2d.rotate(Math.toRadians(theta),x+hw,y+hh);
+        g2d.rotate(Math.toRadians(theta),x+hw,y+hh); //正方形图片的旋转：以正方形中心为旋转中心
         g2d.drawImage(image, x, y, width, height,null);
     }
 

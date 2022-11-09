@@ -15,7 +15,7 @@ public class ModeHandler implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        BoardPanel boardPanel = gizmoBall.getGamePanel();
+        BoardPanel boardPanel = gizmoBall.getBoardPanel();
         if(e.getActionCommand()=="Build") {
             boardPanel.stop(); // 停止BoardPanel线程
             ModePanel.button2.setEnabled(true);

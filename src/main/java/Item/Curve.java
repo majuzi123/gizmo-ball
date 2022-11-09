@@ -1,11 +1,12 @@
 package Item;
 
+import Util.ItemType;
+import Util.VirtualWorld;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
 
 import java.awt.*;
 
@@ -13,9 +14,8 @@ import java.awt.*;
  * 弯轨
  */
 public class Curve extends Item {
-    //通过三角形模拟小球在弯道中的运动情况，内部逻辑与三角形相似
     float worldX, worldY;
-    int count = 3; // vertex number
+    int count = 3; //顶点数量
     int h = Item.BASE_HEIGHT ; //三角形边长
 
     public Curve(Integer x, Integer y, String image){
@@ -27,21 +27,22 @@ public class Curve extends Item {
     }
 
     @Override
-    public void initInWorld() {
+    public void initInWorld() { // 创建刚体
         BodyDef bd = new BodyDef();
         bd.type = BodyType.STATIC;
-        // 设置刚体内部属性
+        bd.userData = ItemType.Curve;
+        bd.position = new Vec2(worldX,worldY);
         FixtureDef fd = new FixtureDef();
         PolygonShape ps = new PolygonShape();
+        fd.shape = ps;
+        fd.density = 0f; //密度
 
-        bd.position = new Vec2(worldX,worldY);
         // 根据theta参数修改刚体
         if(theta == 0){
             ps.set(new Vec2[] {new Vec2(worldX,worldY+(float)h/4),
                     new Vec2(worldX+(float)h/2,worldY+h),
                     new Vec2(worldX,worldY+h) }, count); // 传入三角形的三个顶点（顺时针），count表示顶点的数量
         }else if(theta == 90){
-            // 由左上角的坐标得到顶点数组
             ps.set(new Vec2[] {new Vec2(worldX,worldY),
                     new Vec2(worldX+3*(float)h/4,worldY),
                     new Vec2(worldX,worldY+(float)h/2) }, count);
@@ -55,11 +56,8 @@ public class Curve extends Item {
                     new Vec2(worldX+(float)h/2,worldY+h) }, count);
         }
 
-        fd.shape = ps;
-        fd.density = 0f;
-        body = Common.world.createBody(bd);
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
-
     }
 
 

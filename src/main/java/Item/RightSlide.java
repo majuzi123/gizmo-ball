@@ -1,14 +1,13 @@
 package Item;
 
+import Util.ItemType;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
-
 import java.awt.*;
-
+import Util.VirtualWorld;
 /**
  * 右侧挡板
  */
@@ -24,19 +23,19 @@ public class RightSlide extends Item{
     }
 
     @Override
-    public void initInWorld() {
-        // 定义刚体，设置刚体类型、位置和物理属性
+    public void initInWorld() { // 创建刚体
         BodyDef bd = new BodyDef();
         hw = (float) width /2;
         hh = (float) height /2;
         bd.position = new Vec2(x + hw, y + hh);
         bd.type = BodyType.STATIC; // 固定不动的
-        // 刚体物理属性
+        bd.userData = ItemType.RightSlide;
         FixtureDef fd = new FixtureDef();
         PolygonShape ps = new PolygonShape();
         ps.setAsBox(hw,hh/5);
         fd.shape = ps;
-        body = Common.world.createBody(bd);
+
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
     }
 

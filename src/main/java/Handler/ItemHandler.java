@@ -14,7 +14,7 @@ public class ItemHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String itemName = e.getActionCommand();
         try {
-            gizmoBall.getGamePanel().setItemType(itemName);// 在BoardPanel中设置想要新建的Item的类别
+            gizmoBall.getBoardPanel().setItemType(itemName);// 在BoardPanel中设置想要新建的Item的类别
         } catch (Exception exception) {
             exception.printStackTrace();
         }

@@ -49,7 +49,7 @@ public class GizmoBall extends JFrame {
         });
         setSize(750, 500);
 
-        // 加载菜单
+        // 加载文件菜单
         fileHandler = new FileHandler(this);
         filePanel = new FilePanel(fileHandler);
         setJMenuBar(filePanel);
@@ -58,6 +58,31 @@ public class GizmoBall extends JFrame {
         setBoardPanel(new BoardPanel());
 
         // 加载右侧工具面板
+        setRightPanel();
+
+        setBackground(new Color(247, 247, 243, 255));
+        pack();
+        setVisible(true);
+    }
+
+    /**
+     * 加载BoardPanel布局
+     */
+    public void setBoardPanel(BoardPanel boardPanel) {
+        if(this.boardPanel !=null){
+            for (Component c:this.boardPanel.getComponents()) {
+                boardPanel.remove(c);
+            }
+            remove(this.boardPanel);
+        }
+        this.boardPanel = boardPanel;
+        add(boardPanel, 0);
+    }
+
+    /**
+     * 加载右侧布局
+     */
+    public void setRightPanel(){
         rightPanel = new JPanel();
         rightPanel.setPreferredSize(new Dimension(160, 500));
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
@@ -74,33 +99,16 @@ public class GizmoBall extends JFrame {
         rightPanel.add(itemPanel);
         rightPanel.add(operationPanel);
         rightPanel.add(modePanel);
-
-        setBackground(new Color(247, 247, 243, 255));
         add(rightPanel);
-        pack();
-        setVisible(true);
     }
 
-    public BoardPanel getGamePanel() {
+    public BoardPanel getBoardPanel() {
         return boardPanel;
-    }
-    /**
-     * 加载BoardPanel布局
-     */
-    public void setBoardPanel(BoardPanel boardPanel) {
-        if(this.boardPanel !=null){
-            for (Component c:this.boardPanel.getComponents()) {
-                boardPanel.remove(c);
-            }
-            remove(this.boardPanel);
-        }
-        this.boardPanel = boardPanel;
-        add(boardPanel, 0);
     }
 
     /**
      * 将BoardPanel写入文件
-     */
+     *
     public void saveGamePanel(File file) {
         try {
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
@@ -112,10 +120,11 @@ public class GizmoBall extends JFrame {
             exception.printStackTrace();
         }
     }
+     */
 
     /**
      * 从文件中重新加载BoardPanel
-     */
+     *
     public void loadGamePane(File file) {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
@@ -132,4 +141,5 @@ public class GizmoBall extends JFrame {
             exception.printStackTrace();
         }
     }
+     */
 }

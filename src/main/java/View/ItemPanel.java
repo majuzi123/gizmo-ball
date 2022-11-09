@@ -16,7 +16,7 @@ public class ItemPanel extends JPanel {
     private final ItemHandler itemHandler;
 
     {
-        try { // 显示组件列表
+        try { // 加载图像
             kv.load(this.getClass().getClassLoader().getResourceAsStream("properties/item.properties"));
         } catch (IOException exception) {
             exception.printStackTrace();

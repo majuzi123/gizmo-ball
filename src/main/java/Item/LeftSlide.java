@@ -1,11 +1,13 @@
 package Item;
 
+import Util.ItemType;
+import Util.VirtualWorld;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
+
 import java.awt.*;
 
 /**
@@ -23,19 +25,19 @@ public class LeftSlide extends Item{
     }
 
     @Override
-    public void initInWorld() {
+    public void initInWorld() { // 创建刚体
         BodyDef bd = new BodyDef();
         hw = (float) width /2;
         hh = (float) height /2;
-        //矩形刚体的position 记录矩形的对角线中心位置
         bd.position = new Vec2(x + hw, y + hh);
         bd.type = BodyType.STATIC; // 不可运动的
+        bd.userData = ItemType.LeftSlide;
         FixtureDef fd = new FixtureDef();
         PolygonShape ps = new PolygonShape();
         ps.setAsBox(hw,hh/5);
         fd.shape = ps;
-        // 创建刚体
-        body = Common.world.createBody(bd);
+
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
     }
 

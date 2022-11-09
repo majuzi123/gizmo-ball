@@ -1,11 +1,12 @@
 package Item;
 
+import Util.ItemType;
+import Util.VirtualWorld;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import Util.Common;
 
 import java.awt.*;
 
@@ -23,16 +24,17 @@ public class Circle extends Item{
     }
 
     @Override
-    public void initInWorld() {
+    public void initInWorld() { // 创建刚体
         BodyDef bd = new BodyDef();
         bd.position = new Vec2(x+radius,y+radius);
         bd.type = BodyType.STATIC; // 不可运动的
+        bd.userData = ItemType.Circle;
         FixtureDef fd = new FixtureDef();
         CircleShape cs = new CircleShape();
         cs.m_radius = radius;
         fd.shape = cs;
-        // 创建刚体
-        body = Common.world.createBody(bd);
+
+        body = VirtualWorld.world.createBody(bd);
         body.createFixture(fd);
     }
 

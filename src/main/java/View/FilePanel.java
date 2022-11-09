@@ -5,7 +5,7 @@ import Handler.FileHandler;
 import javax.swing.*;
 
 /**
- * MenuPane类，用于新建、保存和读取游戏
+ * FilePanel类，用于新建、保存和读取游戏
  */
 public class FilePanel extends JMenuBar {
     private final FileHandler fileHandler;

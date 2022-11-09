@@ -1,21 +1,30 @@
 package Handler;
 
 import Controller.GizmoBall;
+import Item.Item;
+import Util.IconUtil;
 import View.BoardPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 
 public class FileHandler implements ActionListener {
     private GizmoBall gizmoBall;
-
+    private IconUtil kv = new IconUtil();
     public FileHandler(GizmoBall gizmoBall){
         this.gizmoBall = gizmoBall;
     }
 
+    {
+        try { // 加载图像
+            kv.load(this.getClass().getClassLoader().getResourceAsStream("properties/item.properties"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
     public void actionPerformed(ActionEvent e) {
         String menuItemName = e.getActionCommand();
         // 处理不同的menu事件
@@ -32,7 +41,7 @@ public class FileHandler implements ActionListener {
         }
     }
     public  void newGame() {
-        BoardPanel boardPanel = gizmoBall.getGamePanel();
+        BoardPanel boardPanel = gizmoBall.getBoardPanel();
         boardPanel.stop();
         // 删除之前的所有组件
         for (Component c: boardPanel.getComponents())
@@ -54,7 +63,7 @@ public class FileHandler implements ActionListener {
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
-            gizmoBall.saveGamePanel(file);
+            saveGamePanel(file);
             System.out.println("保存文件成功");
         }
     }
@@ -66,11 +75,40 @@ public class FileHandler implements ActionListener {
         int returnVal = chooser.showOpenDialog(gizmoBall); // 判断是否打开文件选择框
         if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
             File file = chooser.getSelectedFile();
-            gizmoBall.loadGamePane(file);
+            loadGamePane(file);
             System.out.println("加载文件成功");
         }
         else{
             System.out.println("打开了错误的文件类型");
         }
     }
+
+    public void saveGamePanel(File file) {
+        try {
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(gizmoBall.getBoardPanel());
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (IOException exception) {
+            System.err.println("IO异常");
+            exception.printStackTrace();
+        }
+    }
+    public void loadGamePane(File file) {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            gizmoBall.setBoardPanel((BoardPanel)objectInputStream.readObject());
+            // Image不能序列化，因此重新加载BoardPanel时也要重新加载每个item的Image
+            for(int i = 0; i< gizmoBall.getBoardPanel().getComponentCount(); i++){
+                Item item = ((Item) gizmoBall.getBoardPanel().getComponent(i));
+                String imageUrl = item.getImageUrl();
+                item.setImage(kv.getImageIcon(imageUrl).getImage());
+            }
+            gizmoBall.getBoardPanel().repaint();
+            objectInputStream.close();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
 }
