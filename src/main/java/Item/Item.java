@@ -23,7 +23,7 @@ public class Item extends JComponent{
     double theta;// 旋转角度
     transient Image image;
     String imageUrl;
-    transient Body body;
+    transient Body body; // transient关键字修饰！在序列化处理过程中忽略
 
     public Item(Integer x, Integer y, String imageUrl){
         setX(x); //将鼠标点击位置转换为左上角坐标，使对应的图形画在格子内部（正中间）

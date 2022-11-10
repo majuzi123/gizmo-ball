@@ -6,13 +6,14 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import java.awt.*;
 import Util.VirtualWorld;
+
 /**
  * 直轨:通过两个细长的矩形模拟管道。因此分别创建两个刚体rail1 & rail2
  */
 public class Rail extends Item{
     float hw,hh;
-    Body rail1;
-    Body rail2;
+    transient Body rail1;
+    transient Body rail2;
 
     public Rail(Integer x, Integer y, String image){
         super(x,y,image);
@@ -84,6 +85,8 @@ public class Rail extends Item{
     public void destroyInWorld(){
         VirtualWorld.world.destroyBody(rail1);
         VirtualWorld.world.destroyBody(rail2);
+        //VirtualWorld.world.destroyBody(body);
+        body = null;
     }
 
     @Override

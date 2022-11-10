@@ -1,10 +1,8 @@
 package Controller;
 
 import Handler.FileHandler;
-import Handler.ItemHandler;
 import Handler.ModeHandler;
 import Handler.OperationHandler;
-import Item.Item;
 import View.*;
 import Util.IconUtil;
 import javax.swing.*;
@@ -22,10 +20,10 @@ public class GizmoBall extends JFrame {
     private FileHandler fileHandler;
     private FilePanel filePanel;
     private JPanel rightPanel;
-    private ItemHandler itemHandler;
+
     private ItemPanel itemPanel;
+    private ToolPanel toolPanel;
     private OperationHandler operationHandler;
-    private OperationPanel operationPanel;
     private ModeHandler modeHandler;
     private ModePanel modePanel;
 
@@ -86,18 +84,18 @@ public class GizmoBall extends JFrame {
         rightPanel = new JPanel();
         rightPanel.setPreferredSize(new Dimension(160, 500));
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        operationHandler = new OperationHandler(this);
 
-        itemHandler = new ItemHandler(this); // 组件栏
-        itemPanel = new ItemPanel(itemHandler);
+        itemPanel = new ItemPanel(operationHandler); // 组件栏
 
-        operationHandler = new OperationHandler(this); // 操作栏
-        operationPanel = new OperationPanel(operationHandler);
+       // operationHandler = new OperationHandler(this); // 操作栏
+        toolPanel = new ToolPanel(operationHandler);
 
         modeHandler = new ModeHandler(this); // 模式栏
         modePanel = new ModePanel(modeHandler);
 
         rightPanel.add(itemPanel);
-        rightPanel.add(operationPanel);
+        rightPanel.add(toolPanel);
         rightPanel.add(modePanel);
         add(rightPanel);
     }
@@ -109,7 +107,7 @@ public class GizmoBall extends JFrame {
     /**
      * 将BoardPanel写入文件
      *
-    public void saveGamePanel(File file) {
+    public void saveBoardPanel(File file) {
         try {
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
             objectOutputStream.writeObject(boardPanel);
@@ -125,7 +123,7 @@ public class GizmoBall extends JFrame {
     /**
      * 从文件中重新加载BoardPanel
      *
-    public void loadGamePane(File file) {
+    public void loadBoardPanel(File file) {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
             setBoardPanel((BoardPanel)objectInputStream.readObject());

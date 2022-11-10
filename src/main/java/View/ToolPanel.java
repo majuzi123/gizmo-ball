@@ -11,13 +11,11 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 /**
- * OperationPanel类，展示旋转、删除、放大和缩小操作
+ * ToolPanel类，展示旋转、删除、放大和缩小工具
  */
-public class OperationPanel extends JPanel {
-    private final OperationHandler operationHandler;
-    public OperationPanel(OperationHandler handler){
-        this.operationHandler=handler;
-        Border titleBorder = BorderFactory.createTitledBorder("操作栏");
+public class ToolPanel extends JPanel {
+    public ToolPanel(OperationHandler operationHandler){
+        Border titleBorder = BorderFactory.createTitledBorder("工具栏");
         setBorder(titleBorder);
         setPreferredSize(new Dimension(100, 125));
         setBackground(new Color(247, 247, 243, 255));
@@ -36,7 +34,7 @@ public class OperationPanel extends JPanel {
                 label.setIcon(icon);
                 JRadioButton button = new JRadioButton();
                 button.setBackground(new Color(247, 247, 243, 255));
-                button.addActionListener(operationHandler);
+                button.addActionListener(operationHandler.toolHandler);
                 button.setActionCommand(iconName);
                 button.setPreferredSize(new Dimension(40, 40));
                 button.setMargin(new Insets(5,20,0,10));

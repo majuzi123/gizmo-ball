@@ -63,7 +63,7 @@ public class FileHandler implements ActionListener {
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
-            saveGamePanel(file);
+            saveBoardPanel(file);
             System.out.println("保存文件成功");
         }
     }
@@ -75,7 +75,7 @@ public class FileHandler implements ActionListener {
         int returnVal = chooser.showOpenDialog(gizmoBall); // 判断是否打开文件选择框
         if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
             File file = chooser.getSelectedFile();
-            loadGamePane(file);
+            loadBoardPanel(file);
             System.out.println("加载文件成功");
         }
         else{
@@ -83,7 +83,7 @@ public class FileHandler implements ActionListener {
         }
     }
 
-    public void saveGamePanel(File file) {
+    public void saveBoardPanel(File file) {
         try {
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
             objectOutputStream.writeObject(gizmoBall.getBoardPanel());
@@ -94,7 +94,8 @@ public class FileHandler implements ActionListener {
             exception.printStackTrace();
         }
     }
-    public void loadGamePane(File file) {
+
+    public void loadBoardPanel(File file) {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
             gizmoBall.setBoardPanel((BoardPanel)objectInputStream.readObject());

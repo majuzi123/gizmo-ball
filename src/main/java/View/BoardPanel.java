@@ -302,5 +302,6 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
 
         }
     }
+
 }
 
