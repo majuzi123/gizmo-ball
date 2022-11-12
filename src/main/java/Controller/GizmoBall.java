@@ -20,7 +20,6 @@ public class GizmoBall extends JFrame {
     private FileHandler fileHandler;
     private FilePanel filePanel;
     private JPanel rightPanel;
-
     private ItemPanel itemPanel;
     private ToolPanel toolPanel;
     private OperationHandler operationHandler;
@@ -104,40 +103,4 @@ public class GizmoBall extends JFrame {
         return boardPanel;
     }
 
-    /**
-     * 将BoardPanel写入文件
-     *
-    public void saveBoardPanel(File file) {
-        try {
-            ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
-            objectOutputStream.writeObject(boardPanel);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        } catch (IOException exception) {
-            System.err.println("IO异常");
-            exception.printStackTrace();
-        }
-    }
-     */
-
-    /**
-     * 从文件中重新加载BoardPanel
-     *
-    public void loadBoardPanel(File file) {
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-            setBoardPanel((BoardPanel)objectInputStream.readObject());
-            // Image不能序列化，因此重新加载BoardPanel时也要重新加载每个item的Image
-            for(int i = 0; i< boardPanel.getComponentCount(); i++){
-                Item item = ((Item) boardPanel.getComponent(i));
-                String imageUrl = item.getImageUrl();
-                item.setImage(kv.getImageIcon(imageUrl).getImage());
-            }
-            boardPanel.repaint();
-            objectInputStream.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-     */
 }

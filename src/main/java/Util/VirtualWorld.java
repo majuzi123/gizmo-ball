@@ -26,7 +26,7 @@ public class VirtualWorld implements Serializable {
     public VirtualWorld(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
 
-        world.setContactListener(new ContactListener() { // 设置碰撞监听，用于黑洞吸收
+        world.setContactListener(new ContactListener() { // 当发生碰撞时，触发该方法
             @Override
             public void beginContact(Contact contact) {
                 Fixture fixtureA = contact.getFixtureA();
@@ -38,7 +38,7 @@ public class VirtualWorld implements Serializable {
                     body1 = body2;
                     body2 = b;
                 }
-                if (body1.getUserData() == ItemType.Ball && body2.getUserData() == ItemType.BlackHole) {
+                if (body1.getUserData() == ItemType.Ball && body2.getUserData() == ItemType.BlackHole) { //判断黑洞吸收
                     for(Component component: boardPanel.getComponents()){
                         Item item = (Item) component;
                         if(item.getBody().hashCode()==body1.hashCode()){
