@@ -11,7 +11,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 /**
- * ToolPanel类，展示旋转、删除、放大和缩小工具
+ * ToolPanel类，工具栏，展示旋转、删除、放大和缩小工具
  */
 public class ToolPanel extends JPanel {
     public ToolPanel(OperationHandler operationHandler){

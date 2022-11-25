@@ -17,15 +17,15 @@ import Item.*;
 /**
  * BoardPanel类，用于摆放组件和进行游戏
  */
-public class BoardPanel extends JPanel implements Runnable,Serializable{
+public class GameBoard extends JPanel implements Runnable,Serializable{
 
     IconUtil kv = new IconUtil(); // 工具类，用于加载图像
     private LeftSlide lSlide;
     private RightSlide rSlide;
     private volatile Boolean stop = false;// 标志位，控制线程执行
     private final MyMouseListener myMouseListener = new MyMouseListener();
-    private transient String itemType;// 用于添加下一个组件
-    private transient Item curItem;// 指向当前选择的组件
+    private transient String itemType;// 用于指定添加组件的类型
+    private transient Item curItem;// 当前选择的组件
 
     {
         try { // 加载图像
@@ -35,7 +35,7 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
         }
     }
 
-    public BoardPanel(){
+    public GameBoard(){
         addMouseListener(myMouseListener);
         addKeyListener(new MyKeyListener());
         setPreferredSize(new Dimension(500, 500));
@@ -170,7 +170,7 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
         public void mouseClicked(MouseEvent e) {
             // 可以获取
             if(MouseEvent.BUTTON1 == e.getButton()){
-                BoardPanel panel = (BoardPanel) e.getSource();
+                GameBoard panel = (GameBoard) e.getSource();
                 // 当类型不为箭头时，根据item类型创建并加入
                 String itemType = panel.getItemType();
                 int x = e.getX();
@@ -239,7 +239,7 @@ public class BoardPanel extends JPanel implements Runnable,Serializable{
         }
         @Override
         public void keyPressed(KeyEvent e) {
-            BoardPanel panel = (BoardPanel)e.getSource();
+            GameBoard panel = (GameBoard)e.getSource();
             LeftSlide leftSlide = null;
             RightSlide rightSlide = null;
             if(panel.getLSlide()!=null)

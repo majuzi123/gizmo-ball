@@ -16,7 +16,7 @@ import java.io.*;
  */
 public class GizmoBall extends JFrame {
     IconUtil kv = new IconUtil();
-    private BoardPanel boardPanel;
+    private GameBoard gameBoard;
     private FileHandler fileHandler;
     private FilePanel filePanel;
     private JPanel rightPanel;
@@ -52,7 +52,7 @@ public class GizmoBall extends JFrame {
         setJMenuBar(filePanel);
 
         // 加载左侧游戏面板
-        setBoardPanel(new BoardPanel());
+        setBoardPanel(new GameBoard());
 
         // 加载右侧工具面板
         setRightPanel();
@@ -65,15 +65,15 @@ public class GizmoBall extends JFrame {
     /**
      * 加载BoardPanel布局
      */
-    public void setBoardPanel(BoardPanel boardPanel) {
-        if(this.boardPanel !=null){
-            for (Component c:this.boardPanel.getComponents()) {
-                boardPanel.remove(c);
+    public void setBoardPanel(GameBoard gameBoard) {
+        if(this.gameBoard !=null){
+            for (Component c:this.gameBoard.getComponents()) {
+                gameBoard.remove(c);
             }
-            remove(this.boardPanel);
+            remove(this.gameBoard);
         }
-        this.boardPanel = boardPanel;
-        add(boardPanel, 0);
+        this.gameBoard = gameBoard;
+        add(gameBoard, 0);
     }
 
     /**
@@ -87,8 +87,7 @@ public class GizmoBall extends JFrame {
 
         itemPanel = new ItemPanel(operationHandler); // 组件栏
 
-       // operationHandler = new OperationHandler(this); // 操作栏
-        toolPanel = new ToolPanel(operationHandler);
+        toolPanel = new ToolPanel(operationHandler); // 工具栏
 
         modeHandler = new ModeHandler(this); // 模式栏
         modePanel = new ModePanel(modeHandler);
@@ -99,8 +98,8 @@ public class GizmoBall extends JFrame {
         add(rightPanel);
     }
 
-    public BoardPanel getBoardPanel() {
-        return boardPanel;
+    public GameBoard getBoardPanel() {
+        return gameBoard;
     }
 
 }

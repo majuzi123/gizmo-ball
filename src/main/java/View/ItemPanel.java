@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * ItemPane类，用于添加组件
+ * ItemPanel类，组件栏，陈列组件
  */
 public class ItemPanel extends JPanel {
     IconUtil kv = new IconUtil();

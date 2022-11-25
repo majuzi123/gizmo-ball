@@ -3,7 +3,7 @@ package Handler;
 import Controller.GizmoBall;
 import Item.Item;
 import Util.IconUtil;
-import View.BoardPanel;
+import View.GameBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,34 +40,44 @@ public class FileHandler implements ActionListener {
                 break;
         }
     }
+
+    /**
+     * 新建游戏
+     */
     public  void newGame() {
-        BoardPanel boardPanel = gizmoBall.getBoardPanel();
-        boardPanel.stop();
+        GameBoard gameBoard = gizmoBall.getBoardPanel();
+        gameBoard.stop();
         // 删除之前的所有组件
-        for (Component c: boardPanel.getComponents())
-            boardPanel.remove(c);
+        for (Component c: gameBoard.getComponents())
+            gameBoard.remove(c);
         // 需要手动立即更新UI，否则删除的组件仍会显示
-        boardPanel.updateUI();
+        gameBoard.updateUI();
     }
 
+    /**
+     * 保存游戏
+     */
     public  void saveGame(){
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File(".")); // 打开当前文件所在目录·
+        chooser.setCurrentDirectory(new File("."));
         int option = chooser.showSaveDialog(null);
         // 文件保存逻辑
-        if(option==JFileChooser.APPROVE_OPTION){	// 假如用户选择了保存
+        if(option==JFileChooser.APPROVE_OPTION){
             File file = chooser.getSelectedFile();
-            String fName = chooser.getName(file);	// 从文件名输入框中获取文件名
+            String fName = chooser.getName(file);
             if(!fName.contains(".gizmo")){
                 file = new File(chooser.getCurrentDirectory(),fName+".gizmo");
                 System.out.println("renamed");
                 System.out.println(file.getName());
             }
-            saveBoardPanel(file);
+            saveGameBoard(file);
             System.out.println("保存文件成功");
         }
     }
 
+    /**
+     * 加载游戏
+     */
     public  void loadGame(){
         JFileChooser chooser = new JFileChooser(); // 设置选择器
         chooser.setCurrentDirectory(new File(".")); // 打开当前文件所在目录·
@@ -75,7 +85,7 @@ public class FileHandler implements ActionListener {
         int returnVal = chooser.showOpenDialog(gizmoBall); // 判断是否打开文件选择框
         if (returnVal == JFileChooser.APPROVE_OPTION) { // 如果符合文件类型
             File file = chooser.getSelectedFile();
-            loadBoardPanel(file);
+            loadGameBoard(file);
             System.out.println("加载文件成功");
         }
         else{
@@ -83,7 +93,7 @@ public class FileHandler implements ActionListener {
         }
     }
 
-    public void saveBoardPanel(File file) {
+    public void saveGameBoard(File file) {
         try {
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(new FileOutputStream(file));
             objectOutputStream.writeObject(gizmoBall.getBoardPanel());
@@ -95,10 +105,10 @@ public class FileHandler implements ActionListener {
         }
     }
 
-    public void loadBoardPanel(File file) {
+    public void loadGameBoard(File file) {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-            gizmoBall.setBoardPanel((BoardPanel)objectInputStream.readObject());
+            gizmoBall.setBoardPanel((GameBoard)objectInputStream.readObject());
             // Image不能序列化，因此重新加载BoardPanel时也要重新加载每个item的Image
             for(int i = 0; i< gizmoBall.getBoardPanel().getComponentCount(); i++){
                 Item item = ((Item) gizmoBall.getBoardPanel().getComponent(i));

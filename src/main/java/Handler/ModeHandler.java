@@ -1,7 +1,7 @@
 package Handler;
 
 import Controller.GizmoBall;
-import View.BoardPanel;
+import View.GameBoard;
 import View.ModePanel;
 
 import java.awt.event.ActionEvent;
@@ -15,20 +15,20 @@ public class ModeHandler implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        BoardPanel boardPanel = gizmoBall.getBoardPanel();
-        if(e.getActionCommand()=="Build") {
-            boardPanel.stop(); // 停止BoardPanel线程
+        GameBoard gameBoard = gizmoBall.getBoardPanel();
+        if(e.getActionCommand()=="Build") { // 切换布局模式
+            gameBoard.stop();
             ModePanel.button2.setEnabled(true);
             ModePanel.button1.setEnabled(false);
-            boardPanel.addMouseListener(boardPanel.getMyMouseListener());
+            gameBoard.addMouseListener(gameBoard.getMyMouseListener());
         }
-        else if(e.getActionCommand()=="Play"){
+        else if(e.getActionCommand()=="Play"){ // 切换游玩模式
             ModePanel.button1.setEnabled(true);
             ModePanel.button2.setEnabled(false);
-            boardPanel.begin();
-            boardPanel.requestFocus();
-            boardPanel.removeMouseListener(boardPanel.getMyMouseListener()); // 移除BoardPanel的鼠标监听（防止在游玩过程中添加item）
-            new Thread(boardPanel).start();
+            gameBoard.begin();
+            gameBoard.requestFocus();
+            gameBoard.removeMouseListener(gameBoard.getMyMouseListener());
+            new Thread(gameBoard).start();
         }
     }
 

@@ -7,7 +7,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * ModePane类，用于切换模式
+ * ModePanel类，模式栏
  */
 public class ModePanel extends JPanel {
     public static final JButton button1 = new JButton("布局模式");
